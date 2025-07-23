@@ -36,5 +36,10 @@ pub fn chapter_nine_paragraph_913_4() {
             break;
         }
     }
+    if (assert_eq!(num_loops, 1)) == () {
+        println!("The iterator found the number 5 in one loop.");
+    } else {
+        println!("The iterator did not find the number 5 in one loop.");
+    }   
     println!("Number of loops: {num_loops}");
 }
