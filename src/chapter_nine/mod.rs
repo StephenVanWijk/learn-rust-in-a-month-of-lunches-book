@@ -28,7 +28,7 @@ pub fn chapter_nine_paragraph_913_4() {
 
     let mut num_loops = 0;
     // 20250723 1340CET SDvW testing reverted iterator.
-    let mut big_iter = big_vec.into_iter().rev();
+    let mut big_iter: std::iter::Rev<std::vec::IntoIter<i32>> = big_vec.into_iter().rev();
     loop {
         num_loops +=1;
         println!("{:?}", num_loops);
@@ -42,4 +42,63 @@ pub fn chapter_nine_paragraph_913_4() {
         println!("The iterator did not find the number 5 in one loop.");
     }   
     println!("Number of loops: {num_loops}");
+    // Amended
+}
+
+pub fn chapter_nine_paragraph_914_1(){
+    // 20250723 1413CET SDvW It just zips a flipping iterator over the same same array ["even", "odd"], 
+    // with the range (0..=5).
+    let even_odd_iter = ["even", "odd"].into_iter().cycle();
+
+    let even_odd_vec: Vec<(i32, &str)> = (0..=5)
+        .zip(even_odd_iter)
+        .collect();
+    println!("{:?}", even_odd_vec);
+}
+
+pub fn chapter_nine_paragraph_914_2() {
+    let ten_chars: Vec<char> = ('a'..).take(10).collect();
+    let skip_then_ten_chars: Vec<char> = ('a'..).skip(1300).take(10).collect();
+
+    println!("{ten_chars:?}");
+    println!("{skip_then_ten_chars:?}");
+}
+
+pub fn chapter_nine_paragraph_914_3() {
+    let some_numbers: Vec<i32> = vec![9, 6, 9, 10, 11, 3294587];
+
+    println!("{}", some_numbers
+        .iter()
+        .fold(0, |total_so_far, next_number| total_so_far + next_number)
+    );
+}
+
+#[derive(Debug)]
+struct CombinedEvents {
+    num_of_events: u32,
+    data: Vec<String>,
+}
+
+pub fn chapter_nine_paragraph_914_4() {
+    let events = [
+        "Went to grocery store",
+        "Came home",
+        "Fed cat",
+        "Fed cat again",
+    ];
+
+    let empty_events = CombinedEvents { // ①
+        num_of_events: 0,
+        data: vec![]
+    };
+
+    let combined_events =
+        events
+        .iter()
+        .fold(empty_events, |mut total_events, next_event| { // ②
+            total_events.num_of_events += 1; // ③
+            total_events.data.push(next_event.to_string());
+            total_events
+        });
+    println!("{combined_events:?}");
 }
