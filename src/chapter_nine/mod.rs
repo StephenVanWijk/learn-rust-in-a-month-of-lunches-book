@@ -87,18 +87,34 @@ pub fn chapter_nine_paragraph_914_4() {
         "Fed cat again",
     ];
 
-    let empty_events = CombinedEvents { // ①
+    let empty_events = CombinedEvents {
         num_of_events: 0,
         data: vec![]
     };
 
-    let combined_events =
+    let combined_events: CombinedEvents =
         events
         .iter()
-        .fold(empty_events, |mut total_events, next_event| { // ②
-            total_events.num_of_events += 1; // ③
+        .fold(empty_events, |mut total_events: CombinedEvents, next_event: &&str| {
+            total_events.num_of_events += 1;
             total_events.data.push(next_event.to_string());
             total_events
         });
     println!("{combined_events:?}");
+}
+
+pub fn chapter_nine_paragraph_914_8(){
+    let num_vec = vec![1, 2, 3, 4, 5, 6, 7];
+
+    let chunk_size = 0;
+
+    if (assert!(chunk_size != 0, "Chunk size must be non-zero, 20250725 0905CET SDvW.") == ()) {
+        for chunk in num_vec.chunks(3) {
+            println!("{:?}", chunk);
+        }
+        println!();
+        for window in num_vec.windows(3) {
+            println!("{:?}", window);
+        }
+    }
 }
