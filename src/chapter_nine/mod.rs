@@ -130,3 +130,16 @@ pub fn chapter_nine_paragraph_914_9(){
         println!("'{item}' at index {index}");
     }
 }
+
+pub fn chapter_nine_paragraph_914_10(){
+    let just_numbers: Vec<i32> = vec![1, 5, 100];
+    let mut number_iter: std::iter::Peekable<std::slice::Iter<'_, i32>> = just_numbers.iter().peekable();
+
+    for _ in 0..3 {
+        if(assert_eq!(number_iter.next(), Some(&1))) == () {
+            println!("Found 1");
+        }
+
+        number_iter.next();
+    }
+}
