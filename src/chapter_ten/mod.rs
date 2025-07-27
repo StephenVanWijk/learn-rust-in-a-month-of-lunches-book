@@ -1,3 +1,5 @@
+use std::sync::Mutex;
+use std::sync::RwLock;
 #[derive(Debug)]
 struct City<'a> { // ①
     name: &'a str, // ②
@@ -124,6 +126,9 @@ pub fn chapter_ten_paragraph_1031_1() {
 }
 
 use std::cell::RefCell;
+use std::sync::MutexGuard;
+use std::sync::RwLockReadGuard;
+use std::sync::RwLockWriteGuard;
 
 #[derive(Debug)]
 struct User {
@@ -165,4 +170,48 @@ pub fn chapter_ten_paragraph_1031_2() {
     println!("User 1 active status: {}", referentie);
     user_1.change_active_status(false);
     println!("{}", user_1);
+}
+
+pub fn chapter_ten_paragraph_1033_1() {
+    let my_mutex: Mutex<i32> = Mutex::new(5);
+    let mut mutex_changer:MutexGuard<'_, i32> = my_mutex.lock().unwrap();
+    println!("{:?}", my_mutex);
+    println!("{:?}", mutex_changer);
+    // *mutex_changer = 6;
+    println!("{:?}", mutex_changer);
+}
+
+pub fn chapter_ten_paragraph_1033_3() {
+    let my_mutex: Mutex<i32> = Mutex::new(5);
+    let mut mutex_changer:MutexGuard<'_, i32> = my_mutex.lock().unwrap();
+    *mutex_changer = 6;
+    drop(mutex_changer);
+
+    println!("{:?}", my_mutex);
+}
+
+pub fn chapter_ten_paragraph_1033_5() {
+
+    let my_mutex: Mutex<i32> = Mutex::new(5);
+    let mut mutex_changer: MutexGuard<'_, i32> = my_mutex.lock().unwrap();
+    let mut other_mutex_changer: Result<MutexGuard<'_, i32>, std::sync::TryLockError<MutexGuard<'_, i32>>> = 
+    my_mutex.try_lock();
+
+    dbg!(&mutex_changer);
+    dbg!(&other_mutex_changer);
+    dbg!(&my_mutex.try_lock());
+    
+    if let Ok(value) = my_mutex.try_lock() {
+        println!("The MutexGuard has: {value}")
+    } else {
+        println!("Didn't get the lock")
+    }
+}
+
+pub fn chapter_ten_paragraph_1034_1(){
+    let my_rwlock: RwLock<i32> = RwLock::new(5);
+    let read1: RwLockReadGuard<'_, i32> = my_rwlock.read().unwrap();
+    let read2: RwLockReadGuard<'_, i32> = my_rwlock.read().unwrap();
+    println!("read1:{:?}, read2:{:?}", read1, read2);
+    let write1: RwLockWriteGuard<'_, i32> = my_rwlock.write().unwrap();
 }
