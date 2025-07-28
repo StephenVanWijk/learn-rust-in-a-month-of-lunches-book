@@ -19,5 +19,9 @@ fn main() {
     // chapter_ten::chapter_ten_paragraph_1031_2()
     // chapter_ten::chapter_ten_paragraph_1033_1()
     // chapter_ten::chapter_ten_paragraph_1033_5()
-    chapter_ten::chapter_ten_paragraph_1034_1()
+    // chapter_ten::chapter_ten_paragraph_1034_1()
+    // chapter_ten::chapter_eleven_paragraph_1104_1()
+    // chapter_ten::chapter_eleven_paragraph_1104_2()
+    chapter_ten::chapter_eleven_paragraph_1152_3();
+    chapter_ten::chapter_eleven_paragraph_1152_4()
 }

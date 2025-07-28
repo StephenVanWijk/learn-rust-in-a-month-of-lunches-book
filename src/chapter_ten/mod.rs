@@ -1,5 +1,7 @@
 use std::sync::Mutex;
+use std::rc::Rc;
 use std::sync::RwLock;
+use std::borrow::Cow;
 #[derive(Debug)]
 struct City<'a> { // ①
     name: &'a str, // ②
@@ -215,3 +217,102 @@ pub fn chapter_ten_paragraph_1034_1(){
     println!("read1:{:?}, read2:{:?}", read1, read2);
     let write1: RwLockWriteGuard<'_, i32> = my_rwlock.write().unwrap();
 }
+
+
+#[derive(Debug)]
+struct ErrorInfo {
+    error: LocalError,
+    message: String,
+}
+
+#[derive(Debug)]
+enum LocalError {
+    TooBig,
+    TooSmall,
+}
+
+fn generate_message(
+    message: &'static str,
+    error_info: Option<ErrorInfo>,
+    ) -> Cow<'static, str> {
+        match error_info {
+            None => message.into(),
+            Some(info) => format!("{}: {:?}", message, info).into(),
+        }
+    }
+
+pub fn chapter_eleven_paragraph_1104_1(){
+    let msg1: Cow<'static, str> = generate_message(
+        "Everything is fine",
+        None
+        );
+
+    let msg2: Cow<'static, str> = generate_message(
+        "Got an error",
+        Some(ErrorInfo {
+            error: LocalError::TooBig,
+            message: "It was too big.".to_string(),}),
+        );
+
+        for msg in [msg1, msg2] {
+            match msg {
+            Cow::Borrowed(msg) => {
+                println!("Borrowed, didn't need an allocation:\n {:?}", msg)
+            }
+            Cow::Owned(msg) => {
+                println!("Owned, because we needed an allocation:\n {:?}", msg)
+            }
+        }
+    }
+}
+
+struct UserA {
+    name: Cow<'static, str>,
+}
+
+pub fn chapter_eleven_paragraph_1104_2(){
+
+    let user_name: &'static str = "User1";
+    let other_user_name: String = "User10".to_string();
+
+    let user1: UserA = UserA {
+        name: user_name.into(),
+    };
+
+    let user2: UserA = UserA {
+        name: other_user_name.into(),
+    };
+
+    for name in [user1.name, user2.name] {
+        match name {
+            Cow::Borrowed(n) => {
+                println!("Borrowed name, didn't need an allocation:\n{}", n)
+            }
+            Cow::Owned(n) => {
+                println!("Owned name because we needed an allocation:\n{}", n)
+            }
+        }
+    }
+}
+
+fn takes_a_string(input: Rc<String>) {
+    println!("It is: {}", input)
+}
+
+pub fn chapter_eleven_paragraph_1152_3() {
+    let user_name: Rc<String> = Rc::new(String::from("User MacUserSon"));
+
+    takes_a_string(Rc::clone(&user_name));
+    takes_a_string(Rc::clone(&user_name));
+}
+
+fn takes_a_string_borrowed(input: &String) {
+    println!("It is: {}", input)
+}
+
+pub fn chapter_eleven_paragraph_1152_4() {
+    let user_name: String = String::from("User MacUserSon");
+
+    takes_a_string_borrowed(&user_name);
+    takes_a_string_borrowed(&user_name);
+}       
