@@ -295,9 +295,44 @@ pub fn chapter_eleven_paragraph_1104_2(){
     }
 }
 
+#[derive(Debug)]
+struct CityA {
+    name: Rc<String>,
+    population: u32,
+    city_history: Rc<String>,
+}
+
+#[derive(Debug)]
+struct CityData {
+    names: Vec<Rc<String>>,
+    histories: Vec<Rc<String>>,
+}
+
 fn takes_a_string(input: Rc<String>) {
     println!("It is: {}", input)
 }
+
+pub fn chapter_eleven_paragraph_1152_2() {
+    let calgary_name: Rc<String> = Rc::new("Calgary".to_string());
+    // 20250728 1223CET SDvW
+    // let calgary_name= "Calgary".to_string();
+    let calgary_history: Rc<String> = Rc::new("Calgary began as a fort called Fort Calgary that...".to_string());
+
+    let calgary: CityA = CityA {
+        name: Rc::clone(&calgary_name),
+        population: 1_200_000,
+        city_history: Rc::clone(&calgary_history),
+    };
+
+    let canada_cities: CityData = CityData {
+        names: vec![Rc::clone(&calgary_name)],
+        histories: vec![Rc::clone(&calgary_history)],
+    };
+
+    println!("Calgary's history is: {}", calgary.city_history);
+    println!("{}", Rc::strong_count(&calgary.city_history));
+}
+
 
 pub fn chapter_eleven_paragraph_1152_3() {
     let user_name: Rc<String> = Rc::new(String::from("User MacUserSon"));
