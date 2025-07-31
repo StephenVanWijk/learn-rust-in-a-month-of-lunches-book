@@ -1,5 +1,6 @@
 pub mod chapter_nine;
 pub mod chapter_ten;
+pub mod chapter_eleven;
 fn main() {
     // chapter_nine::chapter_nine_paragraph_913_2();
     // chapter_nine::chapter_nine_paragraph_913_3();
@@ -22,7 +23,7 @@ fn main() {
     // chapter_ten::chapter_ten_paragraph_1034_1()
     // chapter_ten::chapter_eleven_paragraph_1104_1()
     // chapter_ten::chapter_eleven_paragraph_1104_2()
-    chapter_ten::chapter_eleven_paragraph_1152_2();
+    chapter_eleven::chapter_eleven_paragraph_1152_2();
     // chapter_ten::chapter_eleven_paragraph_1152_3();
     // chapter_ten::chapter_eleven_paragraph_1152_4()
 }
