@@ -23,7 +23,9 @@ fn main() {
     // chapter_ten::chapter_ten_paragraph_1034_1()
     // chapter_ten::chapter_eleven_paragraph_1104_1()
     // chapter_ten::chapter_eleven_paragraph_1104_2()
-    chapter_eleven::chapter_eleven_paragraph_1152_2();
+    // chapter_eleven::chapter_eleven_paragraph_1152_2();
     // chapter_ten::chapter_eleven_paragraph_1152_3();
     // chapter_ten::chapter_eleven_paragraph_1152_4()
+    // chapter_eleven::chapter_eleven_paragraph_1161_6();
+    chapter_eleven::chapter_eleven_paragraph_1161_7()
 }

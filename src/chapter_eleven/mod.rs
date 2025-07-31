@@ -2,6 +2,7 @@ use std::sync::Mutex;
 use std::rc::Rc;
 use std::sync::RwLock;
 use std::borrow::Cow;
+use std::thread::{self, JoinHandle};
 
 #[derive(Debug)]
 struct ErrorInfo {
@@ -134,4 +135,30 @@ pub fn chapter_eleven_paragraph_1152_4() {
 
     takes_a_string_borrowed(&user_name);
     takes_a_string_borrowed(&user_name);
-}       
+}
+
+pub fn chapter_eleven_paragraph_1161_6(){
+    let mut join_handles: Vec<JoinHandle<()>> = vec![];
+    for _ in 0..10 {
+        let handle: JoinHandle<()> = thread::spawn(|| {
+            println!("I am printing something");
+        });
+        join_handles.push(handle);
+    }
+    for handle in join_handles {
+        handle.join().unwrap();
+    }
+}
+
+pub fn chapter_eleven_paragraph_1161_7(){
+    let mut join_handles: Vec<JoinHandle<()>> = vec![];
+    for num in 0..10 {
+        let handle: JoinHandle<()> = std::thread::spawn(move || {
+            println!("Inside thread number: {num}");
+        });
+        join_handles.push(handle);
+    }
+    for handle in join_handles {
+        handle.join().unwrap();
+    }
+}
